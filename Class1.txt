@@ -22,7 +22,7 @@ Create table if not exists employee
 show tables;
 
 
----Command to list down all the TABLES
+---Command to list down all the TABLES with its initial create table command:
 show create table employee;
 
 
