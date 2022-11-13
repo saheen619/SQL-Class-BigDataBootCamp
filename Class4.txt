@@ -260,3 +260,9 @@ insert into employees_full_data values(6, 'Nikhil', null);
 select * from employees_full_data;
 
 # Write a query to print the distinct names of managers??
+
+hint: using SELF JOIN
+
+ANS : mysql> select DISTINCT(e2.name)
+    -> from employees_full_data e1, employees_full_data e2
+    -> where e1.mgr_id = e2.emp_id;
