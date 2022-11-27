@@ -297,16 +297,17 @@ select sales_date,
        sales_amount - lag(sales_amount, 1, 0) over(order by sales_date) as sales_diff
 from daily_sales;
 
++------------+----------------+----------------+------------+
+| sales_date | curr_day_sales | prev_day_sales | sales_diff |
++------------+----------------+----------------+------------+
+| 2022-03-11 |            400 |              0 |        400 |
+| 2022-03-12 |            500 |            400 |        100 |
+| 2022-03-13 |            300 |            500 |       -200 |
+| 2022-03-14 |            600 |            300 |        300 |
+| 2022-03-15 |            500 |            600 |       -100 |
+| 2022-03-16 |            200 |            500 |       -300 |
++------------+----------------+----------------+------------+
 
-
-# Diff between lead and lag
-select *,
-      lag(sales_amount, 1) over(order by sales_date) as pre_day_sales
-from daily_sales;
-
-select *,
-      lead(sales_amount, 1) over(order by sales_date) as next_day_sales
-from daily_sales;
 
 # Diff between lead and lag
 select *,
