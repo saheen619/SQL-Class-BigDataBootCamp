@@ -260,6 +260,17 @@ select *,
       lag(sales_amount, 1) over(order by sales_date) as pre_day_sales
 from daily_sales;
 
++------------+--------------+---------------+
+| sales_date | sales_amount | pre_day_sales |
++------------+--------------+---------------+
+| 2022-03-11 |          400 |          NULL |
+| 2022-03-12 |          500 |           400 |
+| 2022-03-13 |          300 |           500 |
+| 2022-03-14 |          600 |           300 |
+| 2022-03-15 |          500 |           600 |
+| 2022-03-16 |          200 |           500 |
++------------+--------------+---------------+
+
 # Query - Calculate the differnce of sales with previous day sales
 # Here null will be derived
 select sales_date,
@@ -268,12 +279,25 @@ select sales_date,
        sales_amount - lag(sales_amount, 1) over(order by sales_date) as sales_diff
 from daily_sales;
 
++------------+----------------+----------------+------------+
+| sales_date | curr_day_sales | prev_day_sales | sales_diff |
++------------+----------------+----------------+------------+
+| 2022-03-11 |            400 |           NULL |       NULL |
+| 2022-03-12 |            500 |            400 |        100 |
+| 2022-03-13 |            300 |            500 |       -200 |
+| 2022-03-14 |            600 |            300 |        300 |
+| 2022-03-15 |            500 |            600 |       -100 |
+| 2022-03-16 |            200 |            500 |       -300 |
++------------+----------------+----------------+------------+
+
 # Here we can replace null with 0
 select sales_date,
        sales_amount as curr_day_sales,
        lag(sales_amount, 1, 0) over(order by sales_date) as prev_day_sales,
        sales_amount - lag(sales_amount, 1, 0) over(order by sales_date) as sales_diff
 from daily_sales;
+
+
 
 # Diff between lead and lag
 select *,
